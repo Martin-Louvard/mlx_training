@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct s_params {
     void    *mlx;
@@ -52,27 +53,29 @@ int draw_line(void *mlx, void *win, int beginX, int beginY, int endX, int endY, 
         }
 }
 
+//keys are letters in ascii
 int	deal_key(int key, void *param)
 {	
-	//keys are letters in ascii
 	if (key == 65307)
 		exit(1);
 	ft_putnbr(key);
 	return (0);
 }
 
+//left click == 1; right click == 3; middle click == 2;
 int	deal_mouse(int key,int x, int y, void *params)
 {
     t_params *args = (t_params *)params;
-	//left click == 1; right click == 3; middle click == 2;
     
+    printf("x: %d\n", x);
+    printf("y: %d\n", y);
     if (key == 1 && !args->beginX && !args->beginY)
     {
         args->beginX = x;
         args->beginY = y;
     }
     else if (key == 1)
-	    draw_line(args->mlx, args->win, args->beginX, args->beginY, x, y, 0xFFFFFF);
+	    draw_line(args->mlx, args->win, args->beginX, args->beginY, x, y, 0x00FF00);
     if (key == 3)
     {
         args->beginX = 0;
@@ -82,17 +85,35 @@ int	deal_mouse(int key,int x, int y, void *params)
 	return (0);
 }
 
+int draw_map(int lines, int col, void *params)
+{
+    t_params *args = (t_params *)params;
+    int beginX;
+    int beginY;
+    int endX;
+    int endY;
+
+    while (lines--)
+    {
+        beginX = 400 ;
+        endX =  400 + col * 10;
+        beginY = 100;
+        endY = 100;
+        draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
+    }
+}
+
 int	main(void)
 {
     t_params    *params;
     params = malloc(sizeof(t_params *));
-    //int 	i = 0;
-
-	params->mlx = mlx_init();
-	params->win = mlx_new_window(params->mlx, 500, 500, "Hello world!");
+	
+    params->mlx = mlx_init();
+	params->win = mlx_new_window(params->mlx, 1920, 1080, "Training");
 	params->beginX = 0;
     params->beginY = 0;
 
+    draw_map(10, 10, params);
     mlx_mouse_hook(params->win, deal_mouse, params);
 	//mlx_string_put(params->mlx, params->win, 250, 250, 0XFF0000, "Hello world");
 	mlx_key_hook(params->win, deal_key, (void *)params);
