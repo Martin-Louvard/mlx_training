@@ -3,6 +3,13 @@
 #include <math.h>
 #include <stdlib.h>
 
+typedef struct s_params {
+    void    *mlx;
+    void    *win;
+    int     beginX;
+    int     beginY;
+} t_params;
+
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
@@ -56,37 +63,38 @@ int	deal_key(int key, void *param)
 
 int	deal_mouse(int key,int x, int y, void *params)
 {
+    t_params *args = (t_params *)params;
 	//left click == 1; right click == 3; middle click == 2;
-	//draw_line(mlx, mlx_win, 500, 500, 0, 0, 0xFFFFFF);
-	ft_putchar('k');
-	ft_putnbr(key);
-	ft_putchar('\n');
-	ft_putchar('x');
-	ft_putnbr(x);
-	ft_putchar('\n');
-	ft_putchar('y');
-	ft_putnbr(y);
-	ft_putchar('\n');
+    
+    if (key == 1 && !args->beginX && !args->beginY)
+    {
+        args->beginX = x;
+        args->beginY = y;
+    }
+    else if (key == 1)
+	    draw_line(args->mlx, args->win, args->beginX, args->beginY, x, y, 0xFFFFFF);
+    if (key == 3)
+    {
+        args->beginX = 0;
+        args->beginY = 0;
+    }
+
 	return (0);
 }
 
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
-	int 	i = 0;
+    t_params    *params;
+    params = malloc(sizeof(t_params *));
+    //int 	i = 0;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 500, 500, "Hello world!");
-	mlx_mouse_hook(mlx_win, deal_mouse, 0);
-	/*while (i++ < 100)
-	  {
-	  mlx_pixel_put(mlx, mlx_win, 200 + i, 250, 0x00FF00);
-	  mlx_pixel_put(mlx, mlx_win, 200, 250 + i, 0x0000FF);
-	  mlx_pixel_put(mlx, mlx_win, 200 + i, 350, 0xFF0000);
-	  mlx_pixel_put(mlx, mlx_win, 300, 250 + i, 0x00FFF0);
-	  }*/
-	//mlx_string_put(mlx, mlx_win, 250, 250, 0XFF0000, "Hello world");
-	mlx_key_hook(mlx_win, deal_key, 0);
-	mlx_loop(mlx);
+	params->mlx = mlx_init();
+	params->win = mlx_new_window(params->mlx, 500, 500, "Hello world!");
+	params->beginX = 0;
+    params->beginY = 0;
+
+    mlx_mouse_hook(params->win, deal_mouse, params);
+	//mlx_string_put(params->mlx, params->win, 250, 250, 0XFF0000, "Hello world");
+	mlx_key_hook(params->win, deal_key, (void *)params);
+	mlx_loop(params->mlx);
 }
