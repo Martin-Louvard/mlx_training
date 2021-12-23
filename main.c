@@ -92,14 +92,25 @@ int draw_map(int lines, int col, void *params)
     int beginY;
     int endX;
     int endY;
+    int init_lines = lines;
 
-    while (lines--)
+    while (lines >= 0)
     {
         beginX = 400 ;
-        endX =  400 + col * 10;
-        beginY = 100;
+        endX =  400 + col * 100;
+        beginY = 100 + lines * 80;
+        endY = beginY;
+        draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
+        lines--;
+    }
+    while (col >= 0)
+    {
+        beginX = 400 + col * 100;
+        endX = beginX;
+        beginY = 100 + init_lines * 80;
         endY = 100;
         draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
+        col--;
     }
 }
 
