@@ -101,13 +101,13 @@ int draw_map(int lines, int col, void *params)
     int init_lines = lines;
     int init_col = col;
 
-    while (lines >= 0)
+    while (--lines >= 0)
     {
         //cartesian
-        beginX = args->winX / init_lines ;
+        beginX = (args->winX / init_col) / 2 ;
         endX = init_lines * (args->winX / init_lines) - beginX;
 
-        beginY = args->winY / (init_col + 1) + lines * (args->winY / init_col);
+        beginY = (args->winY / init_lines ) / 2 + lines * (args->winY / init_lines);
         endY = beginY;
 
         //isometric
@@ -121,18 +121,15 @@ int draw_map(int lines, int col, void *params)
         
         //isometric
         //draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
-        
-        lines--;
     }
-    /*while (col >= 0)
+    while (--col >= 0)
     {
         //cartesian
-        beginX =  col * (args->winX / init_col) + args->winX / init_col;
+        beginX =  col * (args->winX / init_col) + (args->winX / init_col) / 2;
         endX = beginX;
 
-        endY = args->winY / init_col;
-        beginY = args->winY / init_col + init_col * (args->winY / init_col) - endY;
-        
+        beginY = (args->winY / init_lines) / 2;
+        endY = init_lines * (args->winY / init_lines) - beginY;
         
         //isometric
         isoBeginX = args->winX / 2 + beginX - beginY;
@@ -145,9 +142,7 @@ int draw_map(int lines, int col, void *params)
         
         //isometric
         //draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
-        
-        col--;
-    } */
+    }
 }
 
 int	main(void)
@@ -163,7 +158,7 @@ int	main(void)
 	params->win = mlx_new_window(params->mlx, params->winX, params->winY, "Training");
 
     //mlx_pixel_put(params->mlx, params->win, params->winX /2, params->winY /2, 0XFF0000);
-    draw_map(4, 4, params);
+    draw_map(8, 8, params);
     //mlx_mouse_hook(params->win, deal_mouse, params);
 	//mlx_string_put(params->mlx, params->win, 250, 250, 0XFF0000, "Hello world");
 	mlx_key_hook(params->win, deal_key, (void *)params);
