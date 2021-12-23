@@ -110,16 +110,16 @@ int draw_map(int lines, int col, void *params)
         endY = beginY;
 
         //isometric
-        isoBeginX = (init_lines * 100) / 2 - (lines / 2);
-        isoEndX =  (init_lines * 100) - (lines / 2);
-        isoBeginY =  beginY / 2;
-        isoEndY = endY / 2;
+        isoBeginX = args->winX / 2 + beginX - beginY;
+        isoEndX = args->winX / 2 + endX - endY; 
+        isoBeginY = args->winY / 8 + (beginX + beginY) / 2;
+        isoEndY = args->winY / 8 +(endX + endY) / 2;
         
         //cartesian
-        draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
+        //draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
         
         //isometric
-        //draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
+        draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
         
         lines--;
     }
@@ -132,16 +132,16 @@ int draw_map(int lines, int col, void *params)
         endY = args->winY / 4;
         
         //isometric
-        isoBeginX = 400 + init_col / 2 - (col / 2);
-        isoEndX = init_col - (col / 2);
-        isoBeginY = 100 + beginY / 2;
-        isoEndY = endY / 2;
+        isoBeginX = args->winX / 2 + beginX - beginY;
+        isoEndX = args->winX / 2 + endX - endY; 
+        isoBeginY = args->winY / 8 + (beginX + beginY) / 2;
+        isoEndY = args->winY / 8 + (endX + endY) / 2;
 
         //cartesian
-        draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
+        //draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
         
         //isometric
-        //draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
+        draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
         
         col--;
     }
