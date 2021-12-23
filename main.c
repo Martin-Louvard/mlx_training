@@ -60,7 +60,7 @@ int	deal_key(int key, void *param)
 {	
 	if (key == 65307)
 		exit(1);
-	ft_putnbr(key);
+	//ft_putnbr(key);
 	return (0);
 }
 
@@ -161,7 +161,7 @@ int	main(void)
 
     //mlx_pixel_put(params->mlx, params->win, params->winX /2, params->winY /2, 0XFF0000);
     draw_map(4, 4, params);
-    mlx_mouse_hook(params->win, deal_mouse, params);
+    //mlx_mouse_hook(params->win, deal_mouse, params);
 	//mlx_string_put(params->mlx, params->win, 250, 250, 0XFF0000, "Hello world");
 	mlx_key_hook(params->win, deal_key, (void *)params);
 	mlx_loop(params->mlx);
