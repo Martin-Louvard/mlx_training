@@ -92,6 +92,10 @@ int draw_map(int lines, int col, void *params)
     int beginY;
     int endX;
     int endY;
+    int isoBeginX;
+    int isoBeginY;
+    int isoEndX;
+    int isoEndY;
     int init_lines = lines;
 
     while (lines >= 0)
@@ -100,7 +104,12 @@ int draw_map(int lines, int col, void *params)
         endX =  400 + col * 100;
         beginY = 100 + lines * 80;
         endY = beginY;
+        isoBeginX = beginX - beginY;
+        isoEndX = endX - endY;
+        isoBeginY = isoBeginX / 2;
+        isoEndY = isoEndX / 2;
         draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
+        //draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
         lines--;
     }
     while (col >= 0)
@@ -109,7 +118,12 @@ int draw_map(int lines, int col, void *params)
         endX = beginX;
         beginY = 100 + init_lines * 80;
         endY = 100;
+        isoBeginX = beginX - beginY;
+        isoEndX = endX - endY;
+        isoBeginY = isoBeginX / 2;
+        isoEndY = isoEndX / 2;
         draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
+        //draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
         col--;
     }
 }
