@@ -104,9 +104,10 @@ int draw_map(int lines, int col, void *params)
     while (lines >= 0)
     {
         //cartesian
-        beginX = args->winX / 4 ;
-        endX =  args->winX / 4 + col * (args->winX / 10);
-        beginY = args->winY / 4 + lines * (args->winY / 10);
+        beginX = args->winX / init_lines ;
+        endX = init_lines * (args->winX / init_lines) - beginX;
+
+        beginY = args->winY / (init_col + 1) + lines * (args->winY / init_col);
         endY = beginY;
 
         //isometric
@@ -116,20 +117,22 @@ int draw_map(int lines, int col, void *params)
         isoEndY = args->winY / 8 +(endX + endY) / 2;
         
         //cartesian
-        //draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
+        draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
         
         //isometric
-        draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
+        //draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
         
         lines--;
     }
-    while (col >= 0)
+    /*while (col >= 0)
     {
         //cartesian
-        beginX = args->winX / 4 + col * (args->winX / 10);
+        beginX =  col * (args->winX / init_col) + args->winX / init_col;
         endX = beginX;
-        beginY = args->winY / 4 + init_lines * (args->winY / 10);
-        endY = args->winY / 4;
+
+        endY = args->winY / init_col;
+        beginY = args->winY / init_col + init_col * (args->winY / init_col) - endY;
+        
         
         //isometric
         isoBeginX = args->winX / 2 + beginX - beginY;
@@ -138,13 +141,13 @@ int draw_map(int lines, int col, void *params)
         isoEndY = args->winY / 8 + (endX + endY) / 2;
 
         //cartesian
-        //draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
+        draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
         
         //isometric
-        draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
+        //draw_line(args->mlx, args->win, isoBeginX, isoBeginY, isoEndX, isoEndY, 0x00FF00);
         
         col--;
-    }
+    } */
 }
 
 int	main(void)
