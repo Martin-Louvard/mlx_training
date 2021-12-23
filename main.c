@@ -113,8 +113,8 @@ int draw_map(int lines, int col, void *params)
         //isometric
         isoBeginX = args->winX / 2 + beginX - beginY;
         isoEndX = args->winX / 2 + endX - endY; 
-        isoBeginY = args->winY / 8 + (beginX + beginY) / 2;
-        isoEndY = args->winY / 8 +(endX + endY) / 2;
+        isoBeginY = args->winY / init_lines + (beginX + beginY) / 2;
+        isoEndY = args->winY / init_lines +(endX + endY) / 2;
         
         //cartesian
         draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
@@ -134,8 +134,8 @@ int draw_map(int lines, int col, void *params)
         //isometric
         isoBeginX = args->winX / 2 + beginX - beginY;
         isoEndX = args->winX / 2 + endX - endY; 
-        isoBeginY = args->winY / 8 + (beginX + beginY) / 2;
-        isoEndY = args->winY / 8 + (endX + endY) / 2;
+        isoBeginY = args->winY / init_lines + (beginX + beginY) / 2;
+        isoEndY = args->winY / init_lines + (endX + endY) / 2;
 
         //cartesian
         draw_line(args->mlx, args->win, beginX, beginY, endX, endY, 0x00FF00);
@@ -158,7 +158,7 @@ int	main(void)
 	params->win = mlx_new_window(params->mlx, params->winX, params->winY, "Training");
 
     //mlx_pixel_put(params->mlx, params->win, params->winX /2, params->winY /2, 0XFF0000);
-    draw_map(8, 8, params);
+    draw_map(10, 10, params);
     //mlx_mouse_hook(params->win, deal_mouse, params);
 	//mlx_string_put(params->mlx, params->win, 250, 250, 0XFF0000, "Hello world");
 	mlx_key_hook(params->win, deal_key, (void *)params);
