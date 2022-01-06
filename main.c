@@ -158,7 +158,7 @@ int	main(void)
 	params->win = mlx_new_window(params->mlx, params->winX, params->winY, "Training");
 
 	//mlx_pixel_put(params->mlx, params->win, params->winX /2, params->winY /2, 0XFF0000);
-	draw_map(10, 10, params);
+	draw_map(20, 20, params);
 	mlx_mouse_hook(params->win, deal_mouse, params);
 	//mlx_string_put(params->mlx, params->win, 250, 250, 0XFF0000, "Hello world");
 	mlx_key_hook(params->win, deal_key, (void *)params);
